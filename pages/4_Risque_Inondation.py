@@ -40,6 +40,14 @@ fig_carte = px.scatter_map(
     zoom=6.2, center=dict(lat=8.6, lon=1.0),
     height=620,
 )
+# Correctif (refonte) : px.scatter_map n'applique aucune taille de marqueur
+# par defaut -> sur le fond clair "carto-positron", les points (surtout le
+# jaune "Modere") pouvaient devenir quasi invisibles a l'echelle nationale.
+# On force une taille plus grande, comme sur la carte Cartographie (page 1).
+# NB : contrairement aux marqueurs scatter "classiques", scattermap.Marker
+# ne supporte pas de contour (pas d'attribut "line") - la taille est le
+# seul levier de contraste disponible ici.
+fig_carte.update_traces(marker=dict(size=11))
 fig_carte.update_layout(
     map_style="carto-positron",
     margin=dict(l=0, r=0, t=0, b=0),
