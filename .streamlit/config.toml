@@ -1,0 +1,39 @@
+[theme]
+base = "light"
+primaryColor = "#006A4E"
+backgroundColor = "#FAFAF8"
+secondaryBackgroundColor = "#F1F4F2"
+textColor = "#1C2321"
+linkColor = "#0B4D3A"
+linkUnderline = true
+borderColor = "#D8E0DB"
+showWidgetBorder = true
+baseRadius = "none"
+buttonRadius = "none"
+dataframeBorderColor = "#D8E0DB"
+dataframeHeaderBackgroundColor = "#F1F4F2"
+codeBackgroundColor = "#F1F4F2"
+codeTextColor = "#0B4D3A"
+greenColor = "#006A4E"
+blueColor = "#0B4D3A"
+yellowColor = "#C9A227"
+redColor = "#6B3A36"
+orangeColor = "#7A5A12"
+violetColor = "#3D4A46"
+grayColor = "#6B756F"
+font = "IBM Plex Sans:https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+headingFont = "Fraunces:https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap"
+codeFont = "IBM Plex Mono:https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap"
+headingFontWeights = [600, 500, 500, 500, 500, 500]
+baseFontWeight = 400
+showSidebarBorder = false
+
+[theme.sidebar]
+backgroundColor = "#0B4D3A"
+secondaryBackgroundColor = "#083D2E"
+textColor = "#FAFAF8"
+primaryColor = "#C9A227"
+linkColor = "#FAFAF8"
+borderColor = "#0A4333"
+codeBackgroundColor = "#083D2E"
+codeTextColor = "#FAFAF8"
