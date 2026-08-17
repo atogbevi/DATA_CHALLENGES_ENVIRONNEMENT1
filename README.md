@@ -61,10 +61,8 @@ streamlit_app/
 ## Installation et lancement
 
 ```bash
-pip install streamlit plotly pydeck geopandas pyarrow
+pip install -r requirements.txt
 streamlit run app.py
 ```
 
-L'app s'ouvre automatiquement dans le navigateur (http://localhost:8501).
-
-Python 3.10+ recommandé. L'app se lance depuis la racine du dépôt, quel que soit le répertoire de travail : les chemins de données sont calculés à partir de `utils.py`.
+L'app s'ouvre dans le navigateur (http://localhost:8501). Python 3.10 à 3.12 recommandé.
