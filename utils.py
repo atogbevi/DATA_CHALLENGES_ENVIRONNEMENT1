@@ -92,7 +92,7 @@ def marque_sidebar() -> None:
         """
         <div class="sidebar-marque">
           <span class="nom">Diagnostic eau potable</span>
-          <span class="sous">Togo AI Lab · Environnement</span>
+          <span class="sous">Data Challenges · Environnement</span>
         </div>
         """,
         unsafe_allow_html=True,

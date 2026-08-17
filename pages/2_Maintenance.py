@@ -1,12 +1,13 @@
 """
 Page 2 - Maintenance
-=======================
-Objectif pedagogique : deux graphiques cote a cote, JAMAIS fusionnes, pour ne
+
+Objectif: deux graphiques cote a cote, JAMAIS fusionnes, pour ne
 pas laisser penser qu'ils mesurent la meme chose :
 1. Le risque de maintenance (proxy : absence de plan d'entretien)
 2. L'avancement des travaux (status / current_status_of_the_site)
-Le premier est un risque futur, le second est un etat de chantier passe.
+Le premier est un risque futur, le second est un etat de chantier passé.
 """
+
 import plotly.express as px
 import streamlit as st
 
@@ -34,7 +35,7 @@ df_avancement = charger_parquet("page2_maintenance/avancement_travaux_par_region
 col_risque, col_chantier = st.columns((1.05, 1), gap="large")
 
 with col_risque:
-    st.markdown("## Taux de sites sans plan d'entretien")
+    st.markdown("### Taux de sites sans plan d'entretien")
     st.caption("Par région — proxy d'un risque de maintenance futur.")
 
     fig_maintenance_region = px.bar(
@@ -50,7 +51,7 @@ with col_risque:
     st.plotly_chart(fig_maintenance_region, width="stretch", config={"displaylogo": False})
 
 with col_chantier:
-    st.markdown("## Avancement des travaux")
+    st.markdown("### Avancement des travaux")
     st.caption("Indépendant du risque de maintenance — état de chantier passé.")
 
     champ_choisi = st.radio(
@@ -65,7 +66,7 @@ with col_chantier:
         df_avancement_filtre, x="region", y="nb_ouvrages", color="libelle_statut",
         labels={"nb_ouvrages": "Nombre d'ouvrages", "region": "", "libelle_statut": "Statut"},
         barmode="stack",
-        color_discrete_sequence=["#0B4D3A", "#006A4E", "#C9A227", "#4A6B5E", "#1C2321", "#7A8F85"],
+        color_discrete_sequence=["#0B4D3A", "#C9A227", "#1B365D", "#8C3A32", "#1C2321", "#A89B86"],
     )
     fig_avancement.update_layout(height=320)
     styliser_figure(fig_avancement)

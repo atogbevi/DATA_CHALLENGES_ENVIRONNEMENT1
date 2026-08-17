@@ -1,9 +1,9 @@
 """
 Page 5 - Synthese et recommandations
-========================================
-Objectif pedagogique : le score de priorisation est une MOYENNE SIMPLE de 3
-indicateurs normalises (pas de poids arbitraires a defendre devant un jury).
-On rappelle explicitement sa limite : il ne couvre que les cantons deja
+
+Objectif: le score de priorisation est une MOYENNE SIMPLE de 3
+indicateurs normalises.
+Limite : il ne couvre que les cantons deja
 representes dans COSO/TdE, pas les 388 cantons du pays.
 """
 import plotly.express as px
@@ -21,9 +21,8 @@ df_score = charger_parquet("page5_synthese/score_priorisation_canton.parquet")
 st.warning(
     f"Ce score couvre **{len(df_score)} cantons** disposant simultanément des "
     f"3 signaux (maintenance, inondation, démographie) — **pas** un classement "
-    f"des 388 cantons du pays. Il ne peut inclure aucun canton de Maritime : "
-    f"le risque de maintenance vient uniquement de COSO (Nord-Togo), qui ne "
-    f"couvre pas cette région.",
+    f"des 388 cantons du pays. Il ne peut inclure aucun canton de la région Maritime et des Plateaux car "
+    f"le risque de maintenance vient uniquement des données du projet COSO qui ne couvre que le Nord-Togo.",
     icon=":material/info:",
     title="Périmètre du score",
 )
@@ -36,7 +35,7 @@ st.markdown(
     """
 )
 
-st.markdown("## Cantons prioritaires")
+st.markdown("### Cantons prioritaires")
 
 nb_top = st.slider("Nombre de cantons à afficher", 5, len(df_score), 10)
 df_top = df_score.sort_values("score_priorisation", ascending=False).head(nb_top)
@@ -53,8 +52,8 @@ fig_top = px.bar(
 styliser_figure(fig_top)
 st.plotly_chart(fig_top, width="stretch", config={"displaylogo": False})
 
-st.markdown("## Lecture du score, canton par canton")
-st.caption("Les trois composantes sont affichées sous chaque canton du classement, pour expliquer le rang plutôt que de le laisser opaque.")
+st.markdown("### Lecture du score, canton par canton")
+st.caption("Les trois composantes sont affichées sous chaque canton du classement pour expliquer le rang.")
 
 for rang, (_, row) in enumerate(
     df_top.sort_values("score_priorisation", ascending=False).iterrows(),
@@ -76,25 +75,25 @@ for rang, (_, row) in enumerate(
     c_hab.metric("Hab. / ouvrage", f"{row['habitants_par_ouvrage']:.0f}", icon=":material/groups:")
     st.markdown('<hr class="filet-canton">', unsafe_allow_html=True)
 
-st.markdown("## Recommandations")
+st.markdown("### Recommandations")
 
 canton_top1 = df_top.sort_values("score_priorisation", ascending=False).iloc[0]
 
 st.markdown(
     f"""
     <div class="reco">
-      <p><strong>1. Prioriser l'entretien</strong> dans les cantons en tête de liste (ex. <strong>{canton_top1['canton']}</strong>,
+      <p><strong>1. Prioriser la mise en place d'un plan d'entretien</strong> dans les cantons en tête de liste (ex. <strong>{canton_top1['canton']}</strong>,
       région {canton_top1['region']}) : taux sans plan d'entretien de
       {canton_top1['taux_sans_plan_entretien']:.0%}, FRI de {canton_top1['FRI']:.3f}.</p>
     </div>
     <div class="reco">
       <p><strong>2. Étendre la collecte de données</strong> en Maritime et Plateaux : ces régions sont
-      structurellement absentes du score faute de champ de maintenance dans TdE
+      structurellement absentes du score faute de données liées à la maintenance
       et de couverture suffisante dans les sources disponibles.</p>
     </div>
     <div class="reco">
-      <p><strong>3. Traiter Savanes en priorité pour les plans d'entretien</strong> : 86,5% des
-      ouvrages n'ont aucun plan prévu, le taux le plus élevé du pays.</p>
+      <p><strong>3. Traiter la région des Savanes en priorité pour les plans d'entretien</strong> : 86,5% des
+      ouvrages n'ont aucun plan prévu; cette région a donc le taux le plus élevé parmi les régions du pays.</p>
     </div>
     """,
     unsafe_allow_html=True,

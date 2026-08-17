@@ -1,19 +1,12 @@
 """
 Page 1 - Cartographie
-========================
-Objectif pedagogique : une carte choroplethe (polygones colores) et des points
-superposes sont DEUX traces Plotly differentes assemblees dans UNE figure.
+
+Objectif: une carte choroplethe (polygones colores) et des points
+superposes sont DEUX tracés Plotly differentes assemblees dans UNE figure.
 Le choroplethe a besoin d'un GeoJSON "brut" (dict) + d'une colonne id qui
 correspond a "featureidkey" ; les points, eux, prennent juste des listes de
 latitude/longitude.
 
-Correctif applique ici (refonte) : sur la version precedente, les points
-COSO/TdE pouvaient devenir difficiles a distinguer une fois superposes au
-fond choroplethe FRI - un souci connu de rendu Plotly/MapLibre quand un
-calque de polygones et un calque de marqueurs se chevauchent sans contraste
-suffisant. Fix applique : contour blanc + taille augmentee sur les points,
-et opacite du fond choroplethe legerement reduite, pour garantir que les
-points restent visibles quel que soit l'ordre de rendu des calques.
 """
 import plotly.graph_objects as go
 import streamlit as st
@@ -24,9 +17,9 @@ bandeau_institutionnel("Cartographie des points d'eau", ":material/map:")
 
 st.markdown(
     """
-    Fond de carte : FRI (risque d'inondation) par canton, sur les **388 cantons
-    du pays**. Points superposés : les **86 ouvrages COSO** cartographiables
-    (Nord-Togo) et les **67 ouvrages TdE** (Grand Lomé).
+    Fond de carte : FRI (risque d'inondation) par canton, sur les 388 cantons
+    du pays. Points superposés : les 86 ouvrages COSO cartographiables
+    (Nord-Togo) et les 67 ouvrages TdE (Grand Lomé).
     """
 )
 
@@ -105,7 +98,7 @@ st.plotly_chart(fig, width="stretch", config={"displaylogo": False})
 st.caption(
     "Seuls 39% des ouvrages COSO ont une géométrie exploitable (86/218) — "
     "les 132 restants existent mais ne peuvent pas être positionnés sur cette "
-    "carte. Ils restent comptabilisés dans les stats des autres pages. Si les "
+    "carte. Ils restent comptabilisés dans les statistiques des autres pages. Si les "
     "points restent peu visibles sur votre écran, décochez le fond FRI ci-dessus "
     "pour les isoler."
 )

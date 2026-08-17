@@ -1,10 +1,11 @@
 """
 Page 3 - Demographie
-========================
-Objectif pedagogique : deux echelles de population bien distinguees (region =
-officielle 2010, canton = modelisee fri_cantons), jamais melangees dans le
+
+Objectif: deux echelles de population bien distinguees (region =
+recensement de 2010, canton = modelisee fri_cantons), jamais melangees dans le
 meme graphique. Et les zones a faible couverture de donnees sont grisees /
-signalees, jamais presentees comme un vrai indicateur de penurie.
+signalees, jamais presentees comme un vrai indicateur de penurie pour ne pas tirer
+de conclusions erronees.
 """
 import plotly.express as px
 import streamlit as st
@@ -15,7 +16,7 @@ bandeau_institutionnel("Pression démographique", ":material/groups:")
 
 st.markdown(
     """
-    **Pression démographique** = nombre d'habitants qui dépendent, en moyenne,
+    La **Pression démographique** est le nombre d'habitants qui dépendent, en moyenne,
     d'un seul point d'eau dans une zone. Plus ce chiffre est élevé, plus la
     zone est potentiellement sous-équipée.
     """
@@ -27,14 +28,14 @@ df_demo_canton = charger_parquet("page3_demographie/demographie_pression_canton.
 df_demo_region_fiable = df_demo_region[df_demo_region["couverture_donnees_suffisante"]]
 df_demo_region_non_fiable = df_demo_region[~df_demo_region["couverture_donnees_suffisante"]]
 
-st.markdown("## Par région")
-st.caption("Population officielle, recensement 2010 — le chiffre fiable à mettre en avant.")
+st.markdown("### Par région")
+st.caption("Population officielle, recensement 2010")
 
 if len(df_demo_region_non_fiable) > 0:
     zones_exclues = ", ".join(df_demo_region_non_fiable["region_norm"].tolist())
     st.info(
-        f"**{zones_exclues}** exclue(s) du graphique ci-dessous : trop peu "
-        f"d'ouvrages recensés dans COSO/TdE pour que le ratio reflète une vraie "
+        f" La région des **{zones_exclues}** est exclue du graphique ci-dessous car elle contient trop peu "
+        f"d'ouvrages recensés tant au niveau du projet COSO que de la TdE pour que le ratio reflète une vraie "
         f"pénurie plutôt qu'un simple trou de données (hors périmètre des sources "
         f"disponibles, pas forcément hors périmètre de la réalité).",
         icon=":material/info:",
@@ -56,7 +57,7 @@ st.plotly_chart(fig_demo_region, width="stretch", config={"displaylogo": False})
 
 st.markdown('<hr class="filet-canton">', unsafe_allow_html=True)
 
-st.markdown("## Par canton")
+st.markdown("### Par canton")
 st.caption(
     "Population modélisée (`fri_cantons.gpkg`), pas le recensement officiel "
     "utilisé au niveau région. Les deux échelles ne sont pas directement "

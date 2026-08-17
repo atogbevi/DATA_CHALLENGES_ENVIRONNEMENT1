@@ -1,10 +1,8 @@
 """
 app.py - Page d'accueil du dashboard
-=======================================
-Objectif pedagogique : cette page ne fait AUCUN calcul, elle affiche
-uniquement des chiffres deja produits par le pipeline (etapes 1 a 7). C'est
-la regle qu'on s'est fixee des le depart : la logique metier vit dans les
-scripts Python, pas dans l'app.
+
+Objectif: cette page ne fait AUCUN calcul, elle affiche
+uniquement des chiffres deja produits par le pipeline de traitement realise en amont.
 """
 import streamlit as st
 
@@ -58,7 +56,7 @@ def page_accueil() -> None:
     df_maintenance_region = charger_parquet("page2_maintenance/maintenance_risk_par_region.parquet")
     df_score = charger_parquet("page5_synthese/score_priorisation_canton.parquet")
 
-    col1, col2, col3, col4 = st.columns([1.15, 1, 1.2, 1])
+    col1, col2, col3, col4 = st.columns(4)
     col1.metric(
         "Ouvrages recensés",
         "285",
@@ -84,7 +82,7 @@ def page_accueil() -> None:
         icon=":material/target:",
     )
 
-    st.markdown("## Limites méthodologiques à garder en tête")
+    st.markdown("### Limites méthodologiques")
     st.markdown(
         """
         <div class="bloc-limites">
@@ -94,7 +92,7 @@ def page_accueil() -> None:
           </div>
           <div class="note-limite">
             <strong>Couverture géographique partielle</strong>
-            <p>COSO couvre le Nord-Togo, TdE couvre surtout Grand Lomé : le score de priorisation (page Synthèse) ne peut classer que les zones déjà représentées dans ces deux sources, pas les 388 cantons du pays.</p>
+            <p>Le projet COSO couvre le Nord-Togo, les données de la TdE couvrent surtout le Grand Lomé : le score de priorisation (page Synthèse) ne peut classer que les zones déjà représentées dans ces deux sources, pas les 388 cantons du pays.</p>
           </div>
           <div class="note-limite">
             <strong>Deux échelles démographiques</strong>

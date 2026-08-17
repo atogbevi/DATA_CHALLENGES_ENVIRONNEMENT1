@@ -19,12 +19,13 @@ bandeau_institutionnel(
 st.markdown(
     """
     Le **FRI (Flood Risk Index)** affiché ici est extrait précisément pour
-    chaque point (grille 1 km), pas la moyenne de son canton — un point peut
+    chaque point (grille 1 km), pas la moyenne de son canton car un point peut
     être dans une zone moins exposée que le reste de son canton.
     """
 )
 
 gdf_points_fri = charger_geojson("page4_risque_inondation/points_eau_avec_fri.geojson")
+gdf_points_fri = gdf_points_fri.to_crs("EPSG:4326")
 
 niveaux_ordonnes = ["Faible", "Modéré", "Élevé", "Très élevé"]
 
@@ -65,7 +66,7 @@ points_sans_fri = gdf_points_fri["FRI"].isna().sum()
 if points_sans_fri > 0:
     st.caption(
         f"{points_sans_fri} point(s) non affiché(s) : hors couverture de la "
-        f"grille FRI (cas de bordure frontalière, voir étape 4 du pipeline)."
+        f"grille FRI (cas de bordure frontalière)."
     )
 
 st.markdown(
@@ -84,7 +85,7 @@ st.caption(
     "pas sur l'échantillon de points."
 )
 
-st.markdown("## Répartition des ouvrages par niveau de risque")
+st.markdown("### Répartition des ouvrages par niveau de risque")
 
 df_repartition = (
     gdf_points_fri["niveau_risque_inondation"].value_counts()

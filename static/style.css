@@ -1,15 +1,6 @@
-/* =============================================================================
+/* 
    style.css — identite visuelle institutionnelle
-   =============================================================================
-   Principes tenus dans cette refonte :
-   - Aucune ligne d'accent sous les titres (repere visuel "genere par IA" a
-     eviter) : la hierarchie vient de l'espacement et du poids de police, pas
-     d'un filet.
-   - Le motif geometrique (triangles) n'apparait qu'UNE SEULE FOIS, sur la
-     page d'accueil : c'est un signal distinctif, pas une texture repetee.
-   - Aucune bordure arrondie ni ombre portee decorative : des filets fins
-     (1px) suffisent a separer les blocs.
-   ============================================================================= */
+*/
 
 @import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap");
 
@@ -99,23 +90,82 @@ header[data-testid="stHeader"] { background: transparent; }
   margin-top: 0.3rem;
 }
 
-/* Metriques -------------------------------------------------------------- */
+/* Metriques --------------------------------------------------------------
+   Cartes de meme hauteur, libelles qui reviennent a la ligne aux espaces
+   (jamais au milieu d'un mot), icone d'aide ancree en haut a droite,
+   valeurs alignees en bas pour former une ligne horizontale nette. */
+[data-testid="stHorizontalBlock"]:has([data-testid="stMetric"]) {
+  align-items: stretch !important;
+}
+[data-testid="stColumn"]:has([data-testid="stMetric"]) {
+  display: flex !important;
+}
+[data-testid="stColumn"]:has([data-testid="stMetric"]) > div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
 [data-testid="stMetric"] {
   background: #F1F4F2;
-  padding: 1.1rem 1.2rem;
+  padding: 1.05rem 1.1rem 1.1rem;
   border: 1px solid #E4EBE7;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 7.2rem;
+  margin-top: 2rem;
 }
 [data-testid="stMetricLabel"] {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.05em;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: #4D5A55;
+  overflow: visible !important;
+  height: auto !important;
+}
+[data-testid="stMetricLabel"] > div {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  gap: 0.45rem;
+  width: 100%;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  word-break: normal !important;
+}
+[data-testid="stMetricLabel"] > div > div:nth-child(2),
+[data-testid="stMetricLabel"] p {
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+  flex: 1 1 auto;
+  min-width: 0;
+  line-height: 1.4;
+  margin: 0;
+}
+[data-testid="stMetricLabel"] svg {
+  flex-shrink: 0;
+  margin-top: 0.12rem;
+}
+[data-testid="stMetricLabel"] [data-testid="stTooltipHoverTarget"] {
+  flex-shrink: 0;
+  margin-left: auto !important;
+  margin-top: 0.08rem;
 }
 [data-testid="stMetricValue"] {
   font-family: "Fraunces", serif;
   font-weight: 600;
+  font-size: 1.5rem;
   color: #0B2B22;
+  margin-top: auto;
+  padding-top: 0.85rem;
+  line-height: 1.1;
 }
 
 /* Notes / limites methodologiques (page d'accueil) ---------------------- */
