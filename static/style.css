@@ -1,0 +1,275 @@
+/* 
+   style.css — identite visuelle institutionnelle
+*/
+
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap");
+
+/* Nettoyage de l'interface Streamlit par defaut ------------------------- */
+#MainMenu { visibility: hidden; }
+footer { visibility: hidden; }
+header[data-testid="stHeader"] { background: transparent; }
+
+[data-testid="stSidebarCollapseButton"] svg,
+[data-testid="stSidebarNav"] svg {
+  visibility: visible !important;
+}
+
+[data-testid="stMainBlockContainer"] {
+  padding-top: 2.1rem;
+  padding-bottom: 3rem;
+  max-width: 76rem;
+}
+
+/* En-tete de page ---------------------------------------------------------
+   Remplace l'ancien filet vert sous le titre par une hierarchie typographique :
+   petite capitale espacee (eyebrow) + espace genereux + titre en serif.
+   Aucune ligne, aucune bordure. */
+.eyebrow-page {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #5C6A63;
+  margin: 0 0 0.6rem 0;
+}
+
+.eyebrow-page .puce {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: #C9A227;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.titre-page {
+  font-family: "Fraunces", serif;
+  font-weight: 600;
+  font-size: 2.05rem;
+  color: #0B2B22;
+  line-height: 1.18;
+  margin: 0 0 1.6rem 0;
+  max-width: 42rem;
+}
+
+/* Motif geometrique — UNE SEULE occurrence, page d'accueil uniquement */
+.motif-signature {
+  height: 11px;
+  width: 220px;
+  margin: 0.35rem 0 1.1rem;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='56' height='11' viewBox='0 0 56 11'><polygon points='0,11 7,1.2 14,11' fill='%230B4D3A' opacity='0.9'/><polygon points='14,11 21,3.2 28,11' fill='%23006A4E' opacity='0.5'/><polygon points='28,11 35,1.2 42,11' fill='%230B4D3A' opacity='0.28'/><polygon points='42,11 49,4 56,11' fill='%23006A4E' opacity='0.72'/></svg>");
+  background-repeat: repeat-x;
+  background-size: 56px 11px;
+}
+
+/* Bandeau institutionnel dans la sidebar ------------------------------- */
+.sidebar-marque {
+  padding: 0.4rem 0 1.3rem 0;
+  margin-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(250, 250, 248, 0.14);
+}
+.sidebar-marque .nom {
+  display: block;
+  font-family: "Fraunces", serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #FAFAF8;
+  line-height: 1.25;
+}
+.sidebar-marque .sous {
+  display: block;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9FC4B4;
+  margin-top: 0.3rem;
+}
+
+/* Metriques --------------------------------------------------------------
+   Cartes de meme hauteur, libelles qui reviennent a la ligne aux espaces
+   (jamais au milieu d'un mot), icone d'aide ancree en haut a droite,
+   valeurs alignees en bas pour former une ligne horizontale nette. */
+[data-testid="stHorizontalBlock"]:has([data-testid="stMetric"]) {
+  align-items: stretch !important;
+}
+[data-testid="stColumn"]:has([data-testid="stMetric"]) {
+  display: flex !important;
+}
+[data-testid="stColumn"]:has([data-testid="stMetric"]) > div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+[data-testid="stMetric"] {
+  background: #F1F4F2;
+  padding: 1.05rem 1.1rem 1.1rem;
+  border: 1px solid #E4EBE7;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 7.2rem;
+  margin-top: 2rem;
+}
+[data-testid="stMetricLabel"] {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #4D5A55;
+  overflow: visible !important;
+  height: auto !important;
+}
+[data-testid="stMetricLabel"] > div {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  gap: 0.45rem;
+  width: 100%;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  word-break: normal !important;
+}
+[data-testid="stMetricLabel"] > div > div:nth-child(2),
+[data-testid="stMetricLabel"] p {
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+  flex: 1 1 auto;
+  min-width: 0;
+  line-height: 1.4;
+  margin: 0;
+}
+[data-testid="stMetricLabel"] svg {
+  flex-shrink: 0;
+  margin-top: 0.12rem;
+}
+[data-testid="stMetricLabel"] [data-testid="stTooltipHoverTarget"] {
+  flex-shrink: 0;
+  margin-left: auto !important;
+  margin-top: 0.08rem;
+}
+[data-testid="stMetricValue"] {
+  font-family: "Fraunces", serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  color: #0B2B22;
+  margin-top: auto;
+  padding-top: 0.85rem;
+  line-height: 1.1;
+}
+
+/* Notes / limites methodologiques (page d'accueil) ---------------------- */
+.bloc-limites {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: #E4EBE7;
+  border: 1px solid #E4EBE7;
+  margin-top: 0.9rem;
+}
+.note-limite {
+  background: #FFFFFF;
+  padding: 1.15rem 1.25rem;
+}
+.note-limite strong {
+  display: block;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #0B2B22;
+  margin-bottom: 0.45rem;
+}
+.note-limite p {
+  font-size: 0.86rem;
+  line-height: 1.48;
+  color: #4D5A55;
+  margin: 0;
+}
+
+/* Legende FRI (page Risque inondation) ----------------------------------- */
+.legende-fri {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+  margin: 0.7rem 0 0.3rem;
+  padding: 0.85rem 1.1rem;
+  background: #F1F4F2;
+  border: 1px solid #E4EBE7;
+}
+.legende-fri-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  font-size: 0.86rem;
+  color: #1C2321;
+}
+.legende-fri-item .swatch {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border-radius: 50%;
+}
+.legende-fri-item .val {
+  color: #6B756F;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.78rem;
+}
+
+/* Cantons (tableaux enrichis, page Synthese) ----------------------------- */
+.canton-entete {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin: 0.35rem 0 0.15rem;
+}
+.canton-entete .nom {
+  font-family: "Fraunces", serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #0B2B22;
+}
+.canton-entete .region {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #6B756F;
+}
+
+/* Tableaux / dataframes ---------------------------------------------------- */
+[data-testid="stDataFrameResizable"] {
+  border: 1px solid #D8E0DB !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Graphiques Plotly : conteneur neutre ------------------------------------ */
+div[data-testid="stPlotlyChart"] {
+  border: 0;
+  box-shadow: none !important;
+  background: transparent;
+}
+
+/* Alertes (st.warning / st.info) : version institutionnelle, pas Streamlit
+   par defaut (jaune/bleu vifs) */
+[data-testid="stAlertContentWarning"] {
+  color: #4A3A0F;
+}
+div[data-baseweb="notification"] {
+  border-radius: 0 !important;
+}
+
+@media (max-width: 900px) {
+  .bloc-limites { grid-template-columns: 1fr; }
+}

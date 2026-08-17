@@ -1,10 +1,10 @@
 """
 utils.py - Fonctions partagees a toutes les pages du dashboard
 
-Objectif : centraliser ici tout ce qui est répété d'une page à l'autre
-(chemins de données, palettes de couleurs, mise en cache) évite de dupliquer 
-la même logique plusieurs fois et garantit que "risque élevé" a toujours la même couleur, 
-quelle que soit la page.
+Objectif : centraliser ici tout ce qui est repete d'une page a l'autre
+(chemins de donnees, palettes de couleurs, mise en cache) - evite de
+dupliquer la meme logique plusieurs fois et garantit que "risque eleve" a
+toujours la meme couleur, quelle que soit la page.
 """
 
 from pathlib import Path
@@ -16,16 +16,15 @@ import streamlit as st
 # ---------------------------------------------------------------------------
 # Chemin vers les donnees, calcule depuis l'emplacement de CE fichier plutot
 # qu'ecrit en dur -> l'app fonctionne peu importe d'ou elle est lancee.
-# dashboard_data/ est copie A L'INTERIEUR de streamlit_app/ (voir etape
-# d'export) pour que le dossier streamlit_app/ soit autonome : on peut le
-# zipper seul et le lancer sur n'importe quel ordinateur sans dependance
-# externe. D'ou un seul .parent (pas .parent.parent).
 # ---------------------------------------------------------------------------
 DATA_DIR = Path(__file__).resolve().parent / "dashboard_data"
 
 # ---------------------------------------------------------------------------
 # Palettes de couleurs partagees. Definies une seule fois ici pour que la
 # meme categorie ait toujours la meme couleur sur toutes les pages.
+# Ces couleurs de SIGNALISATION (risque, source) sont independantes de la
+# palette institutionnelle (verte/or) utilisee pour l'habillage general —
+# jamais reutilisees comme couleur de "chrome" pour ne pas diluer leur sens.
 # ---------------------------------------------------------------------------
 COULEURS_RISQUE_INONDATION = {
     "Faible": "#2ecc71",
@@ -38,11 +37,6 @@ COULEURS_SOURCE = {
     "COSO": "#2980b9",
     "TdE": "#8e44ad",
 }
-
-# ---------------------------------------------------------------------------
-# Chargement des donnees, mis en cache pour que Streamlit ne relise pas les
-# fichiers a chaque interaction utilisateur (clic, changement de filtre).
-# ---------------------------------------------------------------------------
 
 
 @st.cache_data
@@ -60,3 +54,59 @@ def charger_geojson_brut(chemin_relatif: str) -> dict:
     """Pour les cas ou Plotly a besoin du GeoJSON brut (dict Python), pas d'un GeoDataFrame."""
     with open(DATA_DIR / chemin_relatif, encoding="utf-8") as f:
         return json.load(f)
+
+
+# ---------------------------------------------------------------------------
+# Couche visuelle uniquement (aucune logique de donnees).
+# ---------------------------------------------------------------------------
+_CSS_PATH = Path(__file__).resolve().parent / "static" / "style.css"
+
+
+def injecter_styles() -> None:
+    """Charge le CSS institutionnel. Appele depuis app.py et chaque page."""
+    css = _CSS_PATH.read_text(encoding="utf-8")
+    st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
+
+
+def bandeau_institutionnel(titre: str, icone: str) -> None:
+    """En-tete de page : petite capitale (eyebrow) + titre serif.
+
+    Remplace volontairement l'ancien filet vert sous le titre : une ligne
+    d'accent sous un titre est un des signes les plus reconnaissables d'une
+    interface generee par IA. La hierarchie visuelle vient ici de
+    l'espacement et du contraste de police (Fraunces vs IBM Plex Mono), pas
+    d'un trait.
+    """
+    injecter_styles()
+    st.markdown(
+        '<p class="eyebrow-page"><span class="puce"></span>'
+        "Togo AI Lab · Défi Environnement · Accès à l'eau potable</p>",
+        unsafe_allow_html=True,
+    )
+    st.markdown(f'<h1 class="titre-page">{titre}</h1>', unsafe_allow_html=True)
+
+
+def marque_sidebar() -> None:
+    """En-tete de la barre laterale, visible sur toutes les pages."""
+    st.markdown(
+        """
+        <div class="sidebar-marque">
+          <span class="nom">Diagnostic eau potable</span>
+          <span class="sous">Data Challenges · Environnement</span>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def styliser_figure(fig, *, carte: bool = False):
+    """Applique la typographie institutionnelle sans modifier les traces de donnees."""
+    fig.update_layout(
+        font=dict(family="IBM Plex Sans, sans-serif", color="#1C2321", size=13),
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+    )
+    if not carte:
+        fig.update_xaxes(gridcolor="#E4EBE7", zeroline=False, linecolor="#D8E0DB")
+        fig.update_yaxes(gridcolor="#E4EBE7", zeroline=False, linecolor="#D8E0DB")
+    return fig
